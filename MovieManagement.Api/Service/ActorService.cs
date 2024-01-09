@@ -25,7 +25,7 @@ namespace MovieManagement.Application.Service
                 return actor;
             }
             _logger.LogInformation($"Actor with Id {id} not found");
-            return Errors.User.UserNotFound();
+            return Errors.Actor.ActorNotFound(id);
         }
 
         public async Task<ErrorOr<Actor?>> GetActorByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -39,7 +39,7 @@ namespace MovieManagement.Application.Service
             }
 
             _logger.LogInformation($"Actor with Id {id} not found");
-            return Errors.User.UserNotFound();
+            return Errors.Actor.ActorNotFound(id);
         }
 
 

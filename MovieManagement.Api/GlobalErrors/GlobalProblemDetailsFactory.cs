@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace MovieManagement.Application.Error
+namespace MovieManagement.Application.GlobalErrors
 {
     public class GlobalProblemDetailsFactory : ProblemDetailsFactory
     {
@@ -43,6 +43,7 @@ namespace MovieManagement.Application.Error
         private void ApplyProblemDetailsDefaults(HttpContext httpContext, ProblemDetails problemDetails, int statusCode)
         {
             problemDetails.Status ??= statusCode;
+            problemDetails.Instance ??= httpContext.Request.Path;
 
             if(_options.ClientErrorMapping.TryGetValue(statusCode, out var mapping)) 
             {

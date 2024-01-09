@@ -5,9 +5,8 @@ using MovieManagement.Domain.Entity;
 
 namespace MovieManagement.Application.Controllers
 {
-    [ApiController]
     [Route("Api/[Controller]")]
-    public class ActorsController : ControllerBase
+    public class ActorsController : ApiController
     {
         private readonly IActorService _actorService;
 
@@ -19,22 +18,12 @@ namespace MovieManagement.Application.Controllers
             return Ok(await _actorService.GetAll());
         }
 
-
-        //public ActionResult<ErrorOr<Actor?>> GetActorById(Guid id)
-        // {
-        //   var res = _actorService.GetActorById(id);
-
-        // return res.Match(Ok, _ => Problem(statusCode : StatusCodes.Status404NotFound,title:"User not Found!"));
-
-
-        // }
-
         [HttpGet("{id}")]
-        public async  Task<ActionResult<ErrorOr<Actor?>>> GetActorByIdAsync([FromRoute] Guid id)
+        public async Task<ActionResult<ErrorOr<Actor?>>> GetActorByIdAsync([FromRoute] Guid id)
         {
             var result =  await _actorService.GetActorByIdAsync(id);
 
-            return result.MatchFirst(Ok, error => Problem(statusCode: StatusCodes.Status404NotFound, title: error.Description));
+            return result.Match(Ok, errors => Problem(errors));
         }
 
 

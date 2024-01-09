@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using MovieManagement.Application.Error;
+using MovieManagement.Application.GlobalErrors;
 using MovieManagement.Application.Filter;
 using MovieManagement.Application.Middleware;
 using MovieManagement.Application.Service;
@@ -32,7 +32,7 @@ var app = builder.Build();
 {
     app.UseHttpsRedirection();
     app.MapControllers();
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/error/details");
     app.Run();
 
     //app.UseMiddleware<ErrorHandlingMiddleware>();
